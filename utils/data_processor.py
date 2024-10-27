@@ -1,11 +1,14 @@
 import os
 import json
 from typing import Generator, Tuple
+import numpy as np
 import tensorflow as tf
+from tensorflow.keras.preprocessing.image import load_img, img_to_array
 
 
-def json_to_generator(filepath: str = "data/json/.json") -> Generator[
-    Tuple[str, float, float, float, float, int], None, None]:
+def json_to_generator(
+    filepath: str = "data/json/.json",
+) -> Generator[Tuple[str, float, float, float, float, int], None, None]:
     with open(os.path.join(os.getcwd(), filepath), "r") as file:
         data = json.load(file)
 
@@ -14,7 +17,9 @@ def json_to_generator(filepath: str = "data/json/.json") -> Generator[
     current_label_index = 0
 
     for item in data:
-        image_path = os.path.join(os.getcwd(), "data/photo/{}.jpg".format(item["id"]))
+        image_path = os.path.join(
+            os.getcwd(), "data/photo/train/{}.jpg".format(item["id"])
+        )
 
         for annotation in item["annotations"]:
             for result in annotation["result"]:
@@ -33,7 +38,7 @@ def json_to_generator(filepath: str = "data/json/.json") -> Generator[
                     float(box["height"]),  # Convert to float
                     label_mapping[label],  # Ensure this is an int
                 )
-    print(label_mapping)
+
 
 def generator_to_dataset(
     generator: Generator, batch_size: int = 32, image_size: Tuple[int, int] = (256, 256)
@@ -53,17 +58,20 @@ def generator_to_dataset(
 
     # Map the dataset to extract the annotations and process images
     def process_image(
-            image_path: tf.Tensor,
-            x: tf.Tensor,
-            y: tf.Tensor,
-            width: tf.Tensor,
-            height: tf.Tensor,
-            label: tf.Tensor,
+        image_path: tf.Tensor,
+        x: tf.Tensor,
+        y: tf.Tensor,
+        width: tf.Tensor,
+        height: tf.Tensor,
+        label: tf.Tensor,
     ):
         image = tf.io.read_file(image_path)
         image = tf.image.decode_jpeg(image, channels=3)
         image = tf.image.resize(image, image_size)
-        return image, (x, y, width, height, tf.cast(label, tf.int32))
+        return image, {
+            "class_output": label,  # class label
+            "bbox_output": tf.stack([x, y, width, height]),  # bounding box coordinates
+        }
 
     dataset = dataset.map(process_image, num_parallel_calls=tf.data.AUTOTUNE)
 
@@ -74,6 +82,14 @@ def generator_to_dataset(
     dataset = dataset.prefetch(tf.data.AUTOTUNE)
 
     return dataset
+
+
+# Preprocess the image
+def preprocess_image(image_path, target_size=(256, 256)):
+    img = load_img(image_path, target_size=target_size)
+    img_array = img_to_array(img) / 255.0  # Normalize
+    img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
+    return img_array
 
 
 if __name__ == "__main__":

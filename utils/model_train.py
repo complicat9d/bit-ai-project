@@ -1,27 +1,34 @@
+import os.path
+
 import tensorflow as tf
 
 from utils.data_processor import json_to_generator, generator_to_dataset
 
 
 def create_model(input_shape=(256, 256, 3), num_classes=58):
-    model = tf.keras.Sequential(
-        [
-            tf.keras.layers.Input(shape=input_shape),
-            tf.keras.layers.Conv2D(
-                32, (3, 3), activation="relu", input_shape=input_shape
-            ),
-            tf.keras.layers.MaxPooling2D((2, 2)),
-            tf.keras.layers.Conv2D(64, (3, 3), activation="relu"),
-            tf.keras.layers.MaxPooling2D((2, 2)),
-            tf.keras.layers.Conv2D(128, (3, 3), activation="relu"),
-            tf.keras.layers.MaxPooling2D((2, 2)),
-            tf.keras.layers.Flatten(),
-            tf.keras.layers.Dense(256, activation="relu"),
-            tf.keras.layers.Dense(
-                num_classes, activation="softmax"
-            ),  # Change activation for regression
-        ]
+    inputs = tf.keras.Input(shape=input_shape)
+
+    x = tf.keras.layers.Conv2D(32, (3, 3), activation="relu")(inputs)
+    x = tf.keras.layers.MaxPooling2D((2, 2))(x)
+    x = tf.keras.layers.Conv2D(64, (3, 3), activation="relu")(x)
+    x = tf.keras.layers.MaxPooling2D((2, 2))(x)
+    x = tf.keras.layers.Conv2D(128, (3, 3), activation="relu")(x)
+    x = tf.keras.layers.MaxPooling2D((2, 2))(x)
+    x = tf.keras.layers.Flatten()(x)
+
+    # Output layer for class probabilities
+    class_output = tf.keras.layers.Dense(
+        num_classes, activation="softmax", name="class_output"
+    )(x)
+
+    # Output layer for bounding box coordinates
+    bbox_output = tf.keras.layers.Dense(4, activation="linear", name="bbox_output")(x)
+
+    model = tf.keras.Model(
+        inputs=inputs,
+        outputs={"class_output": class_output, "bbox_output": bbox_output},
     )
+
     return model
 
 
@@ -37,11 +44,17 @@ if __name__ == "__main__":
     # Compile the model
     model.compile(
         optimizer="adam",
-        loss="sparse_categorical_crossentropy",  # Use 'categorical_crossentropy' for one-hot encoded labels
-        metrics=["accuracy"],
+        loss={
+            "class_output": "sparse_categorical_crossentropy",
+            "bbox_output": "mean_squared_error",
+        },
+        metrics={
+            "class_output": "accuracy",
+            "bbox_output": "mean_absolute_error",  # You can use another metric for bounding boxes
+        },
     )
 
     # Fit the model
-    model.fit(dataset, epochs=10)  # Adjust the number of epochs based on your needs
+    model.fit(dataset, epochs=20)  # Adjust the number of epochs based on your needs
 
-    model.save("my_model.h5")
+    model.save(os.path.join(os.getcwd(), "/data/model.h5"))
