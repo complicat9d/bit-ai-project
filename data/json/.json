@@ -1,0 +1,296 @@
+[
+  {
+    "id": 1,
+    "annotations": [
+      {
+        "id": 1,
+        "completed_by": 1,
+        "result": [
+          {
+            "original_width": 1380,
+            "original_height": 1380,
+            "image_rotation": 0,
+            "value": {
+              "x": 36.065236517833966,
+              "y": 88.15432212187527,
+              "width": 9.945899350500959,
+              "height": 7.096231559065302,
+              "rotation": 0,
+              "rectanglelabels": [
+                "Shoes"
+              ]
+            },
+            "id": "ldCQjYXGOJ",
+            "from_name": "label",
+            "to_name": "image",
+            "type": "rectanglelabels",
+            "origin": "manual"
+          },
+          {
+            "original_width": 1380,
+            "original_height": 1380,
+            "image_rotation": 0,
+            "value": {
+              "x": 54.89363274040295,
+              "y": 88.3526813504948,
+              "width": 6.82243994773129,
+              "height": 7.744391292019287,
+              "rotation": 0,
+              "rectanglelabels": [
+                "Shoes"
+              ]
+            },
+            "id": "S4tsKlPmtM",
+            "from_name": "label",
+            "to_name": "image",
+            "type": "rectanglelabels",
+            "origin": "manual"
+          },
+          {
+            "original_width": 1380,
+            "original_height": 1380,
+            "image_rotation": 0,
+            "value": {
+              "x": 39.58557911127081,
+              "y": 48.25727632051741,
+              "width": 21.619355611450473,
+              "height": 39.34602946460655,
+              "rotation": 0,
+              "rectanglelabels": [
+                "Trousers"
+              ]
+            },
+            "id": "ud9MnKcahH",
+            "from_name": "label",
+            "to_name": "image",
+            "type": "rectanglelabels",
+            "origin": "manual"
+          },
+          {
+            "original_width": 1380,
+            "original_height": 1380,
+            "image_rotation": 0,
+            "value": {
+              "x": 35.5132351179782,
+              "y": 21.547490717451176,
+              "width": 31.56066594801773,
+              "height": 26.350461133069825,
+              "rotation": 0,
+              "rectanglelabels": [
+                "Suit"
+              ]
+            },
+            "id": "mUc6_e6_Ak",
+            "from_name": "label",
+            "to_name": "image",
+            "type": "rectanglelabels",
+            "origin": "manual"
+          },
+          {
+            "original_width": 1380,
+            "original_height": 1380,
+            "image_rotation": 0,
+            "value": {
+              "x": 45.45454545454546,
+              "y": 6.647502694933525,
+              "width": 8.983111749910165,
+              "height": 3.114145406635526,
+              "rotation": 0,
+              "rectanglelabels": [
+                "Hair"
+              ]
+            },
+            "id": "OCsY0x7Ghy",
+            "from_name": "label",
+            "to_name": "image",
+            "type": "rectanglelabels",
+            "origin": "manual"
+          }
+        ],
+        "was_cancelled": false,
+        "ground_truth": false,
+        "created_at": "2024-10-27T06:42:11.234683Z",
+        "updated_at": "2024-10-27T06:42:11.234699Z",
+        "draft_created_at": "2024-10-27T06:39:22.884066Z",
+        "lead_time": 199.443,
+        "prediction": {},
+        "result_count": 0,
+        "unique_id": "f32bea74-6b73-4fe9-a853-8ab6d4500af9",
+        "import_id": null,
+        "last_action": null,
+        "task": 1,
+        "project": 1,
+        "updated_by": 1,
+        "parent_prediction": null,
+        "parent_annotation": null,
+        "last_created_by": null
+      }
+    ],
+    "file_upload": "5f73b06f-businessman-confident-person-full-height-wearing-business-suit-isolate_NJgTmGs.jpg",
+    "drafts": [],
+    "predictions": [],
+    "data": {
+      "image": "/Users/user/PycharmProjects/bit-ai-project/data/photo/1.jpg"
+    },
+    "meta": {},
+    "created_at": "2024-10-27T06:35:39.107515Z",
+    "updated_at": "2024-10-27T06:42:11.248325Z",
+    "inner_id": 1,
+    "total_annotations": 1,
+    "cancelled_annotations": 0,
+    "total_predictions": 0,
+    "comment_count": 0,
+    "unresolved_comment_count": 0,
+    "last_comment_updated_at": null,
+    "project": 1,
+    "updated_by": 1,
+    "comment_authors": []
+  },
+  {
+    "id": 2,
+    "annotations": [
+      {
+        "id": 2,
+        "completed_by": 1,
+        "result": [
+          {
+            "original_width": 963,
+            "original_height": 1600,
+            "image_rotation": 0,
+            "value": {
+              "x": 29.62588146689012,
+              "y": 87.53267300246841,
+              "width": 9.69759042314468,
+              "height": 7.142955083467749,
+              "rotation": 0,
+              "rectanglelabels": [
+                "Shoes"
+              ]
+            },
+            "id": "ZzQi59xS8V",
+            "from_name": "label",
+            "to_name": "image",
+            "type": "rectanglelabels",
+            "origin": "manual"
+          },
+          {
+            "original_width": 963,
+            "original_height": 1600,
+            "image_rotation": 0,
+            "value": {
+              "x": 57.7703180164264,
+              "y": 87.00290105332783,
+              "width": 9.766772391604544,
+              "height": 6.849427390305703,
+              "rotation": 0,
+              "rectanglelabels": [
+                "Shoes"
+              ]
+            },
+            "id": "wdyKGLI161",
+            "from_name": "label",
+            "to_name": "image",
+            "type": "rectanglelabels",
+            "origin": "manual"
+          },
+          {
+            "original_width": 963,
+            "original_height": 1600,
+            "image_rotation": 0,
+            "value": {
+              "x": 32.73914823292907,
+              "y": 50.08718892951292,
+              "width": 32.105348318811515,
+              "height": 37.05496964387201,
+              "rotation": 0,
+              "rectanglelabels": [
+                "Trousers"
+              ]
+            },
+            "id": "5WnSQeTvkQ",
+            "from_name": "label",
+            "to_name": "image",
+            "type": "rectanglelabels",
+            "origin": "manual"
+          },
+          {
+            "original_width": 963,
+            "original_height": 1600,
+            "image_rotation": 0,
+            "value": {
+              "x": 24.501568303476514,
+              "y": 20.285781861307616,
+              "width": 48.53420707004436,
+              "height": 31.25774387672788,
+              "rotation": 0,
+              "rectanglelabels": [
+                "Shirt"
+              ]
+            },
+            "id": "5QagySQpbb",
+            "from_name": "label",
+            "to_name": "image",
+            "type": "rectanglelabels",
+            "origin": "manual"
+          },
+          {
+            "original_width": 963,
+            "original_height": 1600,
+            "image_rotation": 0,
+            "value": {
+              "x": 44.07937646941229,
+              "y": 6.138653989334826,
+              "width": 13.07141084132838,
+              "height": 3.210445477180859,
+              "rotation": 0,
+              "rectanglelabels": [
+                "Hair"
+              ]
+            },
+            "id": "z8oJYK9uob",
+            "from_name": "label",
+            "to_name": "image",
+            "type": "rectanglelabels",
+            "origin": "manual"
+          }
+        ],
+        "was_cancelled": false,
+        "ground_truth": false,
+        "created_at": "2024-10-27T06:56:51.347633Z",
+        "updated_at": "2024-10-27T06:56:51.347650Z",
+        "draft_created_at": "2024-10-27T06:53:16.958417Z",
+        "lead_time": 243.337,
+        "prediction": {},
+        "result_count": 0,
+        "unique_id": "52c1cdff-2e93-43f6-a02d-bd6eb7893ac7",
+        "import_id": null,
+        "last_action": null,
+        "task": 2,
+        "project": 1,
+        "updated_by": 1,
+        "parent_prediction": null,
+        "parent_annotation": null,
+        "last_created_by": null
+      }
+    ],
+    "file_upload": "49be9d58-COLOURBOX18738680.webp",
+    "drafts": [],
+    "predictions": [],
+    "data": {
+      "image": "/Users/user/PycharmProjects/bit-ai-project/data/photo/2.jpg"
+    },
+    "meta": {},
+    "created_at": "2024-10-27T06:52:06.805690Z",
+    "updated_at": "2024-10-27T06:56:51.460571Z",
+    "inner_id": 2,
+    "total_annotations": 1,
+    "cancelled_annotations": 0,
+    "total_predictions": 0,
+    "comment_count": 0,
+    "unresolved_comment_count": 0,
+    "last_comment_updated_at": null,
+    "project": 1,
+    "updated_by": 1,
+    "comment_authors": []
+  }
+]
