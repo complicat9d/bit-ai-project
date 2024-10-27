@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 label-studio = "*"
 tensorflow = "*"
+pydantic-settings = "*"
 
 [dev-packages]
 black = "*"

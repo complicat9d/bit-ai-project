@@ -5,11 +5,13 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 
+from config import settings
+
 
 def json_to_generator(
-    filepath: str = "data/json/.json",
+    filepath: str = settings.JSON_PATH,
 ) -> Generator[Tuple[str, float, float, float, float, int], None, None]:
-    with open(os.path.join(os.getcwd(), filepath), "r") as file:
+    with open(filepath, "r") as file:
         data = json.load(file)
 
     # Create label mapping
@@ -18,7 +20,7 @@ def json_to_generator(
 
     for item in data:
         image_path = os.path.join(
-            os.getcwd(), "data/photo/train/{}.jpg".format(item["id"])
+            os.getcwd(), "{}/{}.jpg".format(settings.TRAIN_PHOTO_PATH, item["id"])
         )
 
         for annotation in item["annotations"]:

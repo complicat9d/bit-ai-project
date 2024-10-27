@@ -1,8 +1,7 @@
-import os.path
-
 import tensorflow as tf
 
 from utils.data_processor import json_to_generator, generator_to_dataset
+from config import settings
 
 
 def create_model(input_shape=(256, 256, 3), num_classes=58):
@@ -57,4 +56,4 @@ if __name__ == "__main__":
     # Fit the model
     model.fit(dataset, epochs=20)  # Adjust the number of epochs based on your needs
 
-    model.save(os.path.join(os.getcwd(), "/data/model.h5"))
+    model.save(settings.MODEL_PATH)

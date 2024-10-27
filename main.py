@@ -9,7 +9,7 @@ if __name__ == "__main__":
 
     def main():
         # Load your model
-        model = tf.keras.models.load_model(os.path.join(os.getcwd(), "/data/model.h5"))
+        model = tf.keras.models.load_model(os.getcwd() + "/data/model.h5")
         model.compile(
             optimizer="adam",
             loss="sparse_categorical_crossentropy",
