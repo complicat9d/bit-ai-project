@@ -5,6 +5,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 
+from utils.log import logger
 from config import settings
 
 
@@ -22,7 +23,7 @@ def json_to_generator(
         image_path = os.path.join(
             os.getcwd(), "{}/{}.jpg".format(settings.TRAIN_PHOTO_PATH, item["id"])
         )
-        print(image_path)
+        logger.debug(f"Image being processed: {image_path}")
         for annotation in item["annotations"]:
             for result in annotation["result"]:
                 box = result["value"]
@@ -40,7 +41,8 @@ def json_to_generator(
                     float(box["height"]),  # Convert to float
                     label_mapping[label],  # Ensure this is an int
                 )
-    print(label_mapping)
+
+    logger.debug(label_mapping)
 
 
 def generator_to_dataset(
@@ -98,6 +100,5 @@ def preprocess_image(image_path, target_size=(256, 256)):
 if __name__ == "__main__":
     gen = json_to_generator()
     dataset = generator_to_dataset(gen)
-    print(dataset)
     for images, annotations in dataset.take(55):
         print(images.shape, annotations)
