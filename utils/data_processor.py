@@ -20,7 +20,7 @@ def json_to_generator(
 
     for item in data:
         image_path = os.path.join(
-            os.getcwd(), "{}/{}.png".format(settings.TRAIN_PHOTO_PATH, item["id"])
+            os.getcwd(), "{}/{}.jpg".format(settings.TRAIN_PHOTO_PATH, item["id"])
         )
         print(image_path)
         for annotation in item["annotations"]:

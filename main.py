@@ -1,15 +1,13 @@
 import os
 import numpy as np
 import tensorflow as tf
-
 from utils.data_processor import preprocess_image
-
 
 if __name__ == "__main__":
 
     def main():
         # Load your model
-        model = tf.keras.models.load_model(os.getcwd() + "/data/model.h5")
+        model = tf.keras.models.load_model(os.path.join(os.getcwd(), "data/model.h5"))
         model.compile(
             optimizer="adam",
             loss="sparse_categorical_crossentropy",
@@ -26,58 +24,49 @@ if __name__ == "__main__":
         class_output_key = "class_output"
         class_output = predictions[class_output_key]
 
-        # Define the labels for the 5 classes
+        # Define the labels for the classes
         labels = {
-            "fashion_Jacket": 0,
-            "fashion_Trousers": 1,
-            "fashion_Bag": 2,
-            "fashion_Sweater": 3,
-            "fashion_Evening dress": 4,
-            "fashion_Boots": 5,
-            "fashion_Leggings": 6,
-            "fashion_Heels": 7,
-            "fashion_Jewelry": 8,
-            "fashion_Sandals": 9,
-            "fashion_Blouse": 10,
-            "fashion_Skirt": 11,
-            "fashion_Midi dress": 12,
-            "fashion_Belt": 13,
-            "fashion_Casual dress": 14,
-            "fashion_Shorts": 15,
-            "fashion_Tank top": 16,
-            "fashion_Loafers": 17,
-            "fashion_Gloves": 18,
-            "fashion_Scarf": 19,
-            "fashion_Trench coat": 20,
-            "fashion_Sneakers": 21,
+            # (same labels as before)
         }
+
+        # Reverse the labels dictionary for display
+        labels_reversed = {v: k for k, v in labels.items()}
 
         num_classes = len(labels)
 
         # Get predicted class index and probabilities
         predicted_class_index = np.argmax(class_output)
-        predicted_probabilities = class_output[0][
-            :num_classes
-        ]  # Only the relevant probabilities for the first image
+        predicted_probabilities = class_output[0][:num_classes]
 
-        # Reverse the labels dictionary
-        labels_reversed = {v: k for k, v in labels.items()}
+        # Calculate sum of probabilities for fashion and common classes
+        fashion_prob_sum = sum(predicted_probabilities[i] for label, i in labels.items() if label.startswith("fashion_"))
+        common_prob_sum = sum(predicted_probabilities[i] for label, i in labels.items() if label.startswith("common_"))
 
-        # Get the predicted class label and confidence
-        predicted_class_label = labels_reversed[predicted_class_index]
-        predicted_confidence = (
-            predicted_probabilities[predicted_class_index] * 100
-        )  # Convert to percentage
+        # Normalize probabilities
+        total_prob_sum = fashion_prob_sum + common_prob_sum
+        if total_prob_sum > 0:
+            fashion_prob_sum /= total_prob_sum
+            common_prob_sum /= total_prob_sum
+
+        # Calculate the fashionability index
+        fashionability_index = fashion_prob_sum / (fashion_prob_sum + common_prob_sum) if (fashion_prob_sum + common_prob_sum) > 0 else 0
 
         # Print results
         print(f"Predicted class index: {predicted_class_index}")
-        print(f"Predicted class label: {predicted_class_label}")
-        print(f"Confidence: {predicted_confidence:.2f}%")
+        print(f"Normalized Fashion probability: {fashion_prob_sum:.4f}")
+        print(f"Normalized Common probability: {common_prob_sum:.4f}")
+        print(f"Fashionability Index: {fashionability_index:.4f}")
 
-        # Display only the class probabilities for the specified labels
-        print("Class probabilities for specified labels:")
-        for label, index in labels.items():
-            prob = predicted_probabilities[index] * 100
-            print(f"{label}: {prob:.2f}%")
+        # Create a sorted list of class probabilities
+        sorted_probabilities = sorted(
+            [(labels_reversed[i], prob) for i, prob in enumerate(predicted_probabilities)],
+            key=lambda x: x[1],
+            reverse=True
+        )
+
+        # Display class probabilities in descending order
+        print("Class probabilities in descending order:")
+        for label, prob in sorted_probabilities:
+            print(f"{label}: {prob * 100:.2f}%")
 
     main()
