@@ -2,7 +2,6 @@
 
 <a name="_hlk181262321"></a>Fashion Evaluation AI: Judging Fashionable Clothing Based on Popular Fashion Show Trends
 
-
 保罗 (ID: 1820249041)
 
 伊力亚 (ID: 1820249057)
