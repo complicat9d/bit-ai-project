@@ -1,4 +1,4 @@
-# bit-ai-project
+# BIT-AI-DM-Project
 
 <a name="_hlk181262321"></a>Fashion Evaluation AI: Judging Fashionable Clothing Based on Popular Fashion Show Trends
 
