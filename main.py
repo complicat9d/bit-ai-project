@@ -15,7 +15,7 @@ if __name__ == "__main__":
         )
 
         # Load and preprocess your image
-        image_path = os.path.join(os.getcwd(), "data/photo/test/3.jpg")
+        image_path = os.path.join(os.getcwd(), "data/photo/test/2.jpg")
         input_data = preprocess_image(image_path)
 
         # Make predictions
@@ -87,17 +87,13 @@ if __name__ == "__main__":
         predicted_class_index = np.argmax(class_output)
         predicted_probabilities = class_output[0][:num_classes]
 
+        # Create a dictionary to hold the best probabilities for each unique postfix
+        best_items_by_postfix = {}
+
         # Calculate sum of probabilities for fashion and common classes
         fashion_prob_sum = sum(
-            predicted_probabilities[i]
-            for label, i in labels.items()
-            if label.startswith("fashion_")
-        )
-        common_prob_sum = sum(
-            predicted_probabilities[i]
-            for label, i in labels.items()
-            if label.startswith("common_")
-        )
+            predicted_probabilities[i] for label, i in labels.items() if label.startswith("fashion_"))
+        common_prob_sum = sum(predicted_probabilities[i] for label, i in labels.items() if label.startswith("common_"))
 
         # Normalize probabilities
         total_prob_sum = fashion_prob_sum + common_prob_sum
@@ -106,11 +102,8 @@ if __name__ == "__main__":
             common_prob_sum /= total_prob_sum
 
         # Calculate the fashionability index
-        fashionability_index = (
-            fashion_prob_sum / (fashion_prob_sum + common_prob_sum)
-            if (fashion_prob_sum + common_prob_sum) > 0
-            else 0
-        )
+        fashionability_index = fashion_prob_sum / (fashion_prob_sum + common_prob_sum) if (
+                                                                                                      fashion_prob_sum + common_prob_sum) > 0 else 0
 
         # Print results
         print(f"Predicted class index: {predicted_class_index}")
@@ -118,19 +111,37 @@ if __name__ == "__main__":
         print(f"Normalized Common probability: {common_prob_sum:.4f}")
         print(f"Fashionability Index: {fashionability_index:.4f}")
 
-        # Create a sorted list of class probabilities
-        sorted_probabilities = sorted(
-            [
-                (labels_reversed[i], prob)
-                for i, prob in enumerate(predicted_probabilities)
-            ],
-            key=lambda x: x[1],
-            reverse=True,
-        )
+        # Iterate through predictions to find the best item for each postfix
+        for i in range(num_classes):
+            label = labels_reversed[i]
+            prob = predicted_probabilities[i]
+            postfix = label.split("_")[1]  # Get the postfix (e.g., Jacket, Trousers)
 
-        # Display class probabilities in descending order
-        print("Class probabilities in descending order:")
-        for label, prob in sorted_probabilities:
-            print(f"{label}: {prob * 100:.2f}%")
+            if postfix not in best_items_by_postfix or prob > best_items_by_postfix[postfix][1]:
+                best_items_by_postfix[postfix] = (label, prob)  # Store the best item for this postfix
+
+        # Create a list of the best items
+        best_items_list = list(best_items_by_postfix.values())
+
+        # Sort the best items by probability
+        sorted_best_items = sorted(best_items_list, key=lambda x: x[1], reverse=True)
+
+        # Get the top 5 items by probability
+        top_5_items = sorted_best_items[:5]
+
+        # Print top 5 items with their probabilities
+        print("Top 5 clothing items by probability:")
+        top_5_items_probs = [prob for _, prob in top_5_items]
+
+        # Normalize the top 5 item probabilities
+        sum_probs = sum(top_5_items_probs)
+        if sum_probs > 0:
+            normalized_top_5_probs = [prob / sum_probs for prob in top_5_items_probs]
+        else:
+            normalized_top_5_probs = top_5_items_probs  # In case all are zero
+
+        # Print normalized top 5 items with their probabilities
+        for (label, _), normalized_prob in zip(top_5_items, normalized_top_5_probs):
+            print(f"{label}: {normalized_prob * 100:.2f}%")
 
     main()
