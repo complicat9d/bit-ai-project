@@ -31,9 +31,9 @@ def create_model(input_shape=(256, 256, 3), num_classes=58):
     return model
 
 
-if __name__ == "__main__":
+def compile_model(epochs: int = 20, batch_size: int = 32):
     gen = json_to_generator()
-    dataset = generator_to_dataset(gen, batch_size=32, image_size=(256, 256))
+    dataset = generator_to_dataset(gen, batch_size=batch_size, image_size=(256, 256))
 
     # Create the model
     model = create_model(
@@ -54,6 +54,10 @@ if __name__ == "__main__":
     )
 
     # Fit the model
-    model.fit(dataset, epochs=20)  # Adjust the number of epochs based on your needs
+    model.fit(dataset, epochs=epochs)  # Adjust the number of epochs based on your needs
 
     model.save(settings.MODEL_PATH)
+
+
+if __name__ == "__main__":
+    compile_model()
