@@ -2,7 +2,7 @@ import os
 from rembg import remove
 
 
-def remove_background(input_image_path, output_image_path):
+def remove_background(input_image_path: str, output_image_path: str):
     # Open the input image
     with open(input_image_path, "rb") as input_file:
         input_image = input_file.read()
@@ -15,11 +15,17 @@ def remove_background(input_image_path, output_image_path):
         output_file.write(output_image)
 
 
-# Example usage
-input_path = os.path.join(
-    os.getcwd(), "data/photo/test/2.jpg"
-)  # Change to your input image path
-output_path = os.path.join(
-    os.getcwd(), "output.jpg"
-)  # Change to your desired output path
-remove_background(input_path, output_path)
+def process_images_background(input_folder: str, output_folder: str):
+    os.makedirs(output_folder, exist_ok=True)
+
+    for filename in os.listdir(input_folder):
+        if filename.lower().endswith(".jpg"):
+            input_path = os.path.join(input_folder, filename)
+            output_path = os.path.join(output_folder, f"{filename}")
+            remove_background(input_path, output_path)
+            print(f"Processed: {input_path} -> {output_path}")
+
+
+input_folder = os.path.join(os.getcwd(), "data/photo/train")
+output_folder = os.path.join(os.getcwd(), "output")
+process_images_background(input_folder, output_folder)

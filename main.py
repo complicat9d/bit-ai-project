@@ -8,11 +8,11 @@ from config import settings
 
 if __name__ == "__main__":
 
-    def main():
+    def main(img_path: str):
         # Each time main.py is executed the model is recompiled to ensure consistency with results
         compile_model()
 
-        model = tf.keras.models.load_model(os.path.join(os.getcwd(), "data/model.h5"))
+        model = tf.keras.models.load_model(settings.MODEL_PATH)
         model.compile(
             optimizer="adam",
             loss="sparse_categorical_crossentropy",
@@ -20,7 +20,7 @@ if __name__ == "__main__":
         )
 
         # Load and preprocess your image
-        image_path = os.path.join(os.getcwd(), "data/photo/test/10.jpg")
+        image_path = os.path.join(os.getcwd(), img_path)
         input_data = preprocess_image(image_path)
 
         predictions = model.predict(input_data)
@@ -113,4 +113,4 @@ if __name__ == "__main__":
         for (label, _), normalized_prob in zip(top_5_items, normalized_top_5_probs):
             print(f"{label}: {normalized_prob * 100:.2f}%")
 
-    main()
+    main(img_path="data/photo/test/13.jpg")
