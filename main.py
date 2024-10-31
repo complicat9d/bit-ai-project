@@ -27,7 +27,31 @@ if __name__ == "__main__":
         class_output = predictions[class_output_key]
 
         # Define the labels for the 5 classes
-        labels = {"Shoes": 0, "Trousers": 1, "Suit": 2, "Hair": 3, "Shirt": 4}
+        labels = {
+            "fashion_Jacket": 0,
+            "fashion_Trousers": 1,
+            "fashion_Bag": 2,
+            "fashion_Sweater": 3,
+            "fashion_Evening dress": 4,
+            "fashion_Boots": 5,
+            "fashion_Leggings": 6,
+            "fashion_Heels": 7,
+            "fashion_Jewelry": 8,
+            "fashion_Sandals": 9,
+            "fashion_Blouse": 10,
+            "fashion_Skirt": 11,
+            "fashion_Midi dress": 12,
+            "fashion_Belt": 13,
+            "fashion_Casual dress": 14,
+            "fashion_Shorts": 15,
+            "fashion_Tank top": 16,
+            "fashion_Loafers": 17,
+            "fashion_Gloves": 18,
+            "fashion_Scarf": 19,
+            "fashion_Trench coat": 20,
+            "fashion_Sneakers": 21,
+        }
+
         num_classes = len(labels)
 
         # Get predicted class index and probabilities

@@ -20,9 +20,9 @@ def json_to_generator(
 
     for item in data:
         image_path = os.path.join(
-            os.getcwd(), "{}/{}.jpg".format(settings.TRAIN_PHOTO_PATH, item["id"])
+            os.getcwd(), "{}/{}.png".format(settings.TRAIN_PHOTO_PATH, item["id"])
         )
-
+        print(image_path)
         for annotation in item["annotations"]:
             for result in annotation["result"]:
                 box = result["value"]
@@ -40,6 +40,7 @@ def json_to_generator(
                     float(box["height"]),  # Convert to float
                     label_mapping[label],  # Ensure this is an int
                 )
+    print(label_mapping)
 
 
 def generator_to_dataset(
@@ -83,7 +84,7 @@ def generator_to_dataset(
     # Prefetch for performance
     dataset = dataset.prefetch(tf.data.AUTOTUNE)
 
-    return dataset
+    return dataset.take(59)
 
 
 # Preprocess the image
@@ -98,5 +99,5 @@ if __name__ == "__main__":
     gen = json_to_generator()
     dataset = generator_to_dataset(gen)
     print(dataset)
-    for images, annotations in dataset.take(2):
+    for images, annotations in dataset.take(55):
         print(images.shape, annotations)
